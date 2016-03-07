@@ -83,7 +83,7 @@ public class Main extends Application {
         {
             s[i]=DFT.F((double)i/smpf);
         }
-        //test
+
         /*for(double i=0;i<(double)1/DFT.f;i+=(double)1/(smpf*DFT.f)) {
             s[j] =  DFT.F(i);
             j++;
