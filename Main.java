@@ -21,7 +21,7 @@ public class Main extends Application {
     private recorder r=new recorder();
     private byte[][] voice=new byte[10][recorder.hz*recorder.bit/8*recorder.STEREO];
     private byte[] voice2=new byte[recorder.hz*recorder.bit/8*recorder.STEREO];
-    private byte[] ddata=new byte[2848];
+    private byte[] ddata=new byte[2000];
     private NumberAxis x=new NumberAxis();
     private NumberAxis y=new NumberAxis();
     private XYChart.Series Series=new XYChart.Series();
@@ -31,10 +31,8 @@ public class Main extends Application {
     private FileOutputStream output;
     private FileInputStream input;
     private FileInputStream din;
-    //DFT d=new DFT(ddata.length,ddata);
-    public final int smpf=1000;
-    double [] s=new double[smpf];
-    DFT d=new DFT(s.length,s);
+
+    DFT d=new DFT(ddata.length,ddata);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -54,12 +52,7 @@ public class Main extends Application {
         }catch(FileNotFoundException e){
             e.printStackTrace();
         }
-        /*for(int i=5;i>=0;i--) {
-            System.out.println(i);
-            try{
-                Thread.sleep(1000);
-            }catch(Exception e){}
-        }*/
+
         System.out.println("開始");
         for (int i = 0; i < 1; i++) {
             voice[i] = r.getVoice();
@@ -79,30 +72,17 @@ public class Main extends Application {
         din.read(ddata);
         int j=0;
 
-        for(int i=0;i<s.length;i++)
-        {
-            s[i]=DFT.F((double)i/smpf);
-        }
-
-        /*for(double i=0;i<(double)1/DFT.f;i+=(double)1/(smpf*DFT.f)) {
-            s[j] =  DFT.F(i);
-            j++;
-            //System.out.println(s[j]);
-        }*/
         System.out.println(j);
-        //System.out.println("強度"+DFT.ck(voice2.length,voice2,330));
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                /*for (int i = 0; i < s.length; i++)
-                    appSeries.getData().add(new XYChart.Data(i, s[i]));*/
-                for(int i=0;i<s.length/2;i++) {
-                    Series.getData().add(new XYChart.Data(i, sqrt(d.an(i) * d.an(i) + d.bn(i) * d.bn(i))));
+                for(int i=0;i<ddata.length;i++) {
+                    appSeries.getData().add(new XYChart.Data(i, ddata[i]));
+                    System.out.println(ddata[i]);
                 }
-                    /*Series.getData().add(new XYChart.Data(i, d.an(i)));
-                    appSeries.getData().add(new XYChart.Data(i, d.bn(i)));*/
-                /*for(int i=0;i<voice2.length;i++)
-                    Series.getData().add(new XYChart.Data(i,voice2[i]));*/
+
+                /*for(int i=0;i<ddata.length/2;i++)
+                    appSeries.getData().add(new XYChart.Data(i,sqrt(sq(d.an(i))+sq(d.bn(i)))));*/
             }
         });
         input.close();
@@ -119,5 +99,10 @@ public class Main extends Application {
     public void stop()
     {
         r.stop();
+    }
+
+    private double sq(double i)
+    {
+        return i*i;
     }
 }
