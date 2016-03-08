@@ -98,7 +98,7 @@ public class Main extends Application {
                 /*for (int i = 0; i < s.length; i++)
                     appSeries.getData().add(new XYChart.Data(i, s[i]));*/
                 for(int i=0;i<s.length/2;i++) {
-                    Series.getData().add(new XYChart.Data(i, sqrt(d.an(i) * d.an(i) + d.bn(i) * d.bn(i))));
+                    Series.getData().add(new XYChart.Data(i, sqrt(sq(d.an(i))+sq(d.bn(i)))));
                 }
                     /*Series.getData().add(new XYChart.Data(i, d.an(i)));
                     appSeries.getData().add(new XYChart.Data(i, d.bn(i)));*/
@@ -115,6 +115,12 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    private double sq(double i)
+    {
+        return i*i;
+    }
+
 
     @Override
     public void stop()
