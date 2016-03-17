@@ -9,7 +9,7 @@ public class DFT
 {
     private int m=0;
     private double[] F;
-    public final static int f=400;
+    public final static int f=428;
     public DFT(int m,double[] F)
     {
         this.m=m;
@@ -35,7 +35,7 @@ public class DFT
             //if(an/m>0.1)
             System.out.println("an(" + n+ ")" + an / m);
 
-        return (an/m);
+        return (an/PI);
     }
 
     public double bn(int n)
@@ -46,7 +46,7 @@ public class DFT
             //if(bn/m>0.1)
             System.out.println("bn(" + n + ")" + bn / m);
 
-        return (bn/m);
+        return (bn/PI);
     }
 
     public static double F(double x)

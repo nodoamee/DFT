@@ -32,9 +32,9 @@ public class Main extends Application {
     private FileInputStream input;
     private FileInputStream din;
     //DFT d=new DFT(ddata.length,ddata);
-    public final int smpf=1000;
-    double [] s=new double[smpf];
-    DFT d=new DFT(s.length,s);
+    public static final int smpf=1000;
+    double [] s=new double[smpf*2];
+    DFT d=new DFT(smpf,s);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -97,7 +97,7 @@ public class Main extends Application {
             public void run() {
                 /*for (int i = 0; i < s.length; i++)
                     appSeries.getData().add(new XYChart.Data(i, s[i]));*/
-                for(int i=0;i<s.length/2;i++) {
+                for(int i=0;i<smpf/2;i++) {
                     Series.getData().add(new XYChart.Data(i, sqrt(sq(d.an(i))+sq(d.bn(i)))));
                 }
                     /*Series.getData().add(new XYChart.Data(i, d.an(i)));
